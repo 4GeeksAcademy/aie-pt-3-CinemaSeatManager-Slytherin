@@ -13,7 +13,6 @@ FUNCIÓN mostrarSala(sala)
 IMPRIMIR "Estado actual de la sala:"
 IMPRIMIR encabezado con números de columnas y filas
 PARA recorrer cada fila en sala
-CREAR string fila
 PARA cada asiento EN fila
 SI asiento = 1 ENTONCES
 fila = "X "   // ocupado
@@ -38,13 +37,16 @@ PARA cada asiento EN fila
 SI asiento ocupado === 1 ENTONCES asiento + 1
 FIN SI
 total=== número de filas * número de columnas
-total=== libres+ocupados=total
-RETORNAR (total)
+libres== total - ocupados 
+RETORNAR (ocupados, libres)
 FIN FUNCIÓN
 
 //FUNCIÓN buscarAsientosJuntos(sala)
 PARA fila DESDE 0 HASTA 7
 PARA columna DESDE 0 HASTA 8 para revisar columna+1
+SI sala[fila][columna+1] != null ENTONCES
+RETORNAR "El asiento no exite"(false)
+SINO RETORNAR "el asiento existe"(true)
 SI sala[fila][columna] = 0 Y sala[fila][columna+1] = 0 ENTONCES
 RETORNAR "Asientos juntos encontrados en (fila, columna) y (fila, columna+1)"
 SINO RETORNAR "No hay asientos juntos disponibles"
