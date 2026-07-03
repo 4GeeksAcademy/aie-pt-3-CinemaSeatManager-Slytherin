@@ -1,0 +1,53 @@
+//Crear sala, inicia con sala desocupada 
+FUNCIÓN inicializarSala()
+CREAR matriz sala de 8 filas x 10 columnas
+PARA fila DESDE 0 HASTA 7
+PARA columna DESDE 0 HASTA 9
+sala[fila][columna] 0 = asientos libres
+RETORNAR sala
+FIN FUNCIÓN 
+
+
+//Se muestra la sala inicia con sala desocupada 
+FUNCIÓN mostrarSala(sala)
+IMPRIMIR "Estado actual de la sala:"
+IMPRIMIR encabezado con números de columnas y filas
+PARA recorrer cada fila en sala
+PARA cada asiento EN fila
+SI asiento = 1 ENTONCES
+fila = "X "   // ocupado
+SINO
+fila = "L "   // libre
+IMPRIMIR fila
+FIN FUNCIÓN
+
+//para reservar un asiento
+FUNCIÓN reservarAsiento(sala, fila, columna)
+SI fila o columna están fuera del rango válido ENTONCES
+RETORNAR "Posición inválida"
+SI sala[fila][columna] === 1 ENTONCES
+RETORNAR "El asiento ya está ocupado"
+SI sala[fila][columna]=== 0 Esta disponible reservar
+RETORNAR "Reservada correctamente"
+FIN FUNCIÓN
+
+//Contar asientos 
+FUNCIÓN contarAsientos(sala)
+PARA cada asiento EN fila
+SI asiento ocupado === 1 ENTONCES asiento + 1
+FIN SI
+total=== número de filas * número de columnas
+libres== total - ocupados 
+RETORNAR (ocupados, libres)
+FIN FUNCIÓN
+
+//FUNCIÓN buscarAsientosJuntos(sala)
+PARA fila DESDE 0 HASTA 7
+PARA columna DESDE 0 HASTA 8 para revisar columna+1
+SI sala[fila][columna+1] != null ENTONCES
+RETORNAR "El asiento no exite"(false)
+SINO RETORNAR "el asiento existe"(true)
+SI sala[fila][columna] = 0 Y sala[fila][columna+1] = 0 ENTONCES
+RETORNAR "Asientos juntos encontrados en (fila, columna) y (fila, columna+1)"
+SINO RETORNAR "No hay asientos juntos disponibles"
+FIN FUNCIÓN
