@@ -1,0 +1,66 @@
+pseudocodigo - cinema seat manager
+
+inicio
+
+crear una matriz llamada sala con 8 filas y 10 columnas
+llenar toda la matriz con 0 (libre)
+
+funcion mostrar_sala()
+  recorrer cada fila de la sala
+  mostrar "fila" + numero de fila + asientos
+fin funcion
+
+funcion reservar_asiento(fila, columna)
+  si fila < 0 o fila > 7 o columna < 0 o columna > 9
+    devolver "asiento fuera de rango"
+  fin si
+
+  si sala[fila][columna] es 1
+    devolver "ese asiento ya esta ocupado"
+  si no
+    sala[fila][columna] = 1
+    devolver "reserva hecha"
+  fin si
+fin funcion
+
+funcion liberar_asiento(fila, columna)
+  si fila < 0 o fila > 7 o columna < 0 o columna > 9
+    devolver "asiento fuera de rango"
+  fin si
+
+  si sala[fila][columna] es 0
+    devolver "ese asiento ya estaba libre"
+  si no
+    sala[fila][columna] = 0
+    devolver "asiento liberado"
+  fin si
+fin funcion
+
+funcion leer_datos()
+  mostrar "ingresa fila (0 a 7)"
+  leer fila desde el input
+  mostrar "ingresa columna (0 a 9)"
+  leer columna desde el input
+  devolver fila y columna
+fin funcion
+
+cuando hagan click en "reservar"
+  datos = leer_datos()
+  mensaje = reservar_asiento(datos.fila, datos.columna)
+  mostrar mensaje
+  mostrar_sala()
+
+cuando hagan click en "liberar"
+  datos = leer_datos()
+  mensaje = liberar_asiento(datos.fila, datos.columna)
+  mostrar mensaje
+  mostrar_sala()
+
+cuando hagan click en "actualizar vista"
+  mostrar_sala()
+  mostrar "vista actualizada"
+
+al iniciar el programa
+  mostrar_sala()
+
+fin
