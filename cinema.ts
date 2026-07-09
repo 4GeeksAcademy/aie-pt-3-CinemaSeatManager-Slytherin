@@ -1,18 +1,58 @@
 /**
+ * Inicializa una matriz de 8 filas x 10 columnas con todos los asientos libres (0).
+ */
+function inicializarSala(): number[][] {
+    const filas = 8;
+    const columnas = 10;
+    const sala: number[][] = [];
+
+    for (let i = 0; i < filas; i++) {
+        sala[i] = [];
+        for (let j = 0; j < columnas; j++) {
+            sala[i][j] = 0; // 0 = libre
+        }
+    }
+
+    return sala;
+}
+
+/**
+ * Muestra el estado actual de la sala.
+ * X = ocupado
+ * L = libre
+ */
+function mostrarSala(sala: number[][]): void {
+    console.log("Estado actual de la sala:");
+    let encabezado = "    ";
+    for (let c = 0; c < sala[0].length; c++) {
+        encabezado += `${c} `;
+    }
+    console.log(encabezado);
+
+    sala.forEach((fila, i) => {
+        let filaStr = `${i} | `;
+        fila.forEach(asiento => {
+            filaStr += asiento === 1 ? "X " : "L ";
+        });
+        console.log(filaStr);
+    });
+}
+
+/**
  * Intenta reservar un asiento.
  * Devuelve un mensaje indicando si la operación fue exitosa.
  */
 function reservarAsiento(sala: number[][], fila: number, columna: number): string {
     if (fila < 0 || fila >= sala.length || columna < 0 || columna >= sala[0].length) {
-        return "Posición inválida.";
+        return "❌ Posición inválida.";
     }
 
     if (sala[fila][columna] === 1) {
-        return ` El asiento (${fila}, ${columna}) ya está ocupado.`;
+        return `❌ El asiento (${fila}, ${columna}) ya está ocupado.`;
     }
 
     sala[fila][columna] = 1;
-    return `Reserva confirmada para el asiento (${fila}, ${columna}).`;
+    return `✅ Reserva confirmada para el asiento (${fila}, ${columna}).`;
 }
 
 /**
@@ -39,9 +79,9 @@ function buscarContiguos(sala: number[][]): string {
     for (let i = 0; i < sala.length; i++) {
         for (let j = 0; j < sala[i].length - 1; j++) {
             if (sala[i][j] === 0 && sala[i][j + 1] === 0) {
-                return ` Asientos juntos libres encontrados en fila ${i}: (${i}, ${j}) y (${i}, ${j + 1}).`;
+                return `🎉 Asientos contiguos libres encontrados en fila ${i}: (${i}, ${j}) y (${i}, ${j + 1}).`;
             }
         }
     }
-    return "No hay asientos contiguos disponibles.";
+    return "⚠️ No hay asientos contiguos disponibles.";
 }
