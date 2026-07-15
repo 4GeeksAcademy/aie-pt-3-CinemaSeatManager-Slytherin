@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cinema Seat Manager - Alfonso</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 12px;
+      }
+
+      button {
+        margin-top: 8px;
+        margin-right: 8px;
+      }
+
+      #sala {
+        margin-top: 10px;
+      }
+
+      .fila {
+        margin-bottom: 4px;
+      }
+
+      .numero-fila {
+        width: 24px;
+        display: inline-block;
+      }
+
+      .asiento {
+        display: inline-block;
+        width: 18px;
+        border: 1px solid #000;
+        text-align: center;
+        margin-right: 2px;
+      }
+
+      .libre {
+        background: #cfc;
+      }
+
+      .ocupado {
+        background: #fcc;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Cinema Seat Manager</h1>
+    <label for="fila">Fila (0 a 7)</label>
+    <input id="fila" type="number" min="0" max="7" />
+
+    <label for="columna">Columna (0 a 9)</label>
+    <input id="columna" type="number" min="0" max="9" />
+
+    <button id="btnReservar">Reservar</button>
+    <button id="btnLiberar">Liberar</button>
+
+    <p>L = libre, O = ocupado</p>
+    <div id="sala"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
