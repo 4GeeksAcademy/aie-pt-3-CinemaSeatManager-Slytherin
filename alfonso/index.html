@@ -4,61 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cinema Seat Manager - Alfonso</title>
-    <style>
-      body {
-        font-family: sans-serif;
-        margin: 12px;
-      }
-
-      button {
-        margin-top: 8px;
-        margin-right: 8px;
-      }
-
-      #sala {
-        margin-top: 10px;
-      }
-
-      .fila {
-        margin-bottom: 4px;
-      }
-
-      .numero-fila {
-        width: 24px;
-        display: inline-block;
-      }
-
-      .asiento {
-        display: inline-block;
-        width: 18px;
-        border: 1px solid #000;
-        text-align: center;
-        margin-right: 2px;
-      }
-
-      .libre {
-        background: #cfc;
-      }
-
-      .ocupado {
-        background: #fcc;
-      }
-    </style>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <h1>Cinema Seat Manager</h1>
-    <label for="fila">Fila (0 a 7)</label>
-    <input id="fila" type="number" min="0" max="7" />
+    <main class="contenedor">
+      <h1>Cinema Seat Manager</h1>
+      <p class="subtitulo">Version facil en HTML, CSS y JavaScript</p>
 
-    <label for="columna">Columna (0 a 9)</label>
-    <input id="columna" type="number" min="0" max="9" />
+      <section class="panel">
+        <label for="fila">Fila (0 a 7)</label>
+        <input id="fila" type="number" min="0" max="7" />
 
-    <button id="btnReservar">Reservar</button>
-    <button id="btnLiberar">Liberar</button>
+        <label for="columna">Columna (0 a 9)</label>
+        <input id="columna" type="number" min="0" max="9" />
 
-    <p>L = libre, O = ocupado</p>
-    <div id="sala"></div>
+        <div class="botones">
+          <button id="btnReservar">Reservar</button>
+          <button id="btnLiberar">Liberar</button>
+          <button id="btnActualizar">Actualizar vista</button>
+        </div>
 
-    <script src="script.js"></script>
+        <p id="mensaje">Bienvenido al gestor de asientos</p>
+      </section>
+
+      <section class="panel">
+        <h2>Estado de la sala</h2>
+        <p class="leyenda">L = libre, O = ocupado</p>
+        <div id="sala"></div>
+      </section>
+    </main>
+
+    <script src="../app.js"></script>
   </body>
 </html>
