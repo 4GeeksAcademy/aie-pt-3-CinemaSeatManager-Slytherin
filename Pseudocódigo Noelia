@@ -1,0 +1,93 @@
+// INICIALIZAR SALA DE CINE
+// Crear una tabla/matriz de 8x10 con todos los asientos libres (0)
+FUNCIÓN inicializarSala()
+  CREAR sala COMO tabla/matriz vacía
+  PARA fila DESDE 0 HASTA 7
+    PARA columna DESDE 0 HASTA 9
+      sala[fila][columna] = 0   // 0 = libre
+    FIN PARA
+  FIN PARA
+  RETORNAR sala
+FIN FUNCIÓN
+
+
+// MOSTRAR SALA
+// Imprime visualmente el estado de cada asiento
+FUNCIÓN mostrarSala(sala)
+  IMPRIMIR "Estado actual de la sala:"
+  IMPRIMIR encabezado con filas 1-8 y columnas 1-10
+  PARA fila DESDE 0 HASTA 7
+    PARA columna DESDE 0 HASTA 9
+      SI sala[fila][columna] = 1 ENTONCES
+        IMPRIMIR "X"   // ocupado
+      SINO
+        IMPRIMIR "L"   // libre
+      FIN SI
+    FIN PARA
+    IMPRIMIR salto de línea
+  FIN PARA
+FIN FUNCIÓN
+
+
+// RESERVAR ASIENTO
+// Validar y ocupar un asiento específico
+FUNCIÓN reservarAsiento(sala, fila, columna)
+  SI fila < 0 O fila >= 8 O columna < 0 O columna >= 10 ENTONCES
+    RETORNAR "Error: posición fuera del rango de la sala"
+  FIN SI
+  SI sala[fila][columna] = 1 ENTONCES
+    RETORNAR "El asiento ya está ocupado"
+  FIN SI
+  SI sala[fila][columna] = 0 ENTONCES
+    sala[fila][columna] = 1
+    RETORNAR "Asiento reservado correctamente"
+SINO
+    RETORNAR "El asiento ya está ocupado"
+FIN SI
+
+// CONTAR ASIENTOS
+// Calcular asientos ocupados y libres
+FUNCIÓN contarAsientos(sala)
+  DECLARAR ocupados = 0
+  DECLARAR total = 8 * 10
+  PARA fila DESDE 0 HASTA 7
+    PARA columna DESDE 0 HASTA 9
+      SI sala[fila][columna] = 1 ENTONCES
+        ocupados = ocupados + 1
+      FIN SI
+    FIN PARA
+  FIN PARA
+  DECLARAR libres = total - ocupados
+  RETORNAR (total, ocupados, libres)
+FIN FUNCIÓN
+
+
+// BUSCAR ASIENTOS JUNTOS
+// Encontrar el primer par de asientos consecutivos libres
+FUNCIÓN buscarAsientosJuntos(sala)
+  PARA fila DESDE 0 HASTA 7
+    PARA columna DESDE 0 HASTA 8   // hasta 8 para revisar columna+1
+      SI sala[fila][columna] = 0 Y sala[fila][columna+1] = 0 ENTONCES
+        RETORNAR "Asientos juntos encontrados en fila " + fila + " columnas " + columna + " y " + (columna+1)
+      FIN SI
+  SI sala[fila][columna] = 0 ENTONCES
+        libres = libres + 1    // contamos los asientos libres individuales
+      FIN SI
+    FIN PARA
+  FIN PARA
+  RETORNAR "No hay asientos juntos disponibles. Asientos libres individuales: " + libres
+FIN FUNCIÓN
+
+
+// PROGRAMA PRINCIPAL
+INICIO
+  sala = inicializarSala()
+  mostrarSala(sala)
+  IMPRIMIR reservarAsiento(sala, 0, 0)   // Reservado correctamente
+  IMPRIMIR reservarAsiento(sala, 0, 0)   // Ya está ocupado
+  IMPRIMIR reservarAsiento(sala, 9, 5)   // Fuera de rango
+  mostrarSala(sala)
+  IMPRIMIR contarAsientos(sala)
+  IMPRIMIR buscarAsientosJuntos(sala)
+FIN
+
