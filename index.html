@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cinema Seat Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: "#f4f7fb",
+                100: "#e8eff8",
+                500: "#28536b",
+                700: "#1c3d4e",
+                900: "#112733",
+              },
+              accent: {
+                400: "#f59e0b",
+                500: "#d97706",
+              },
+            },
+            boxShadow: {
+              panel: "0 20px 60px rgba(17, 39, 51, 0.18)",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background:
+          radial-gradient(circle at top, rgba(245, 158, 11, 0.14), transparent 30%),
+          linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+      }
+
+      .fila {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .numero-fila {
+        width: 3rem;
+        text-align: right;
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: #28536b;
+      }
+
+      .asiento {
+        display: inline-flex;
+        height: 2.5rem;
+        width: 2.5rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 800;
+        color: white;
+        cursor: pointer;
+        transition:
+          transform 160ms ease,
+          box-shadow 160ms ease,
+          opacity 160ms ease;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.16);
+      }
+
+      .asiento:hover {
+        transform: translateY(-1px) scale(1.03);
+      }
+
+      .libre {
+        background: linear-gradient(135deg, #10b981, #059669);
+      }
+
+      .ocupado {
+        background: linear-gradient(135deg, #ef4444, #b91c1c);
+      }
+
+      .seleccionado {
+        outline: 3px solid #f59e0b;
+        outline-offset: 2px;
+        transform: translateY(-1px) scale(1.04);
+      }
+
+      #sala {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen text-slate-900">
+    <main class="mx-auto flex min-h-screen max-w-7xl items-center px-4 py-10 sm:px-6 lg:px-8">
+      <section class="grid w-full gap-8 lg:grid-cols-[360px_minmax(0,1fr)]">
+        <article class="rounded-3xl border border-white/60 bg-white/80 p-6 shadow-panel backdrop-blur sm:p-8">
+          <div class="mb-8">
+            <p class="mb-2 inline-flex rounded-full bg-brand-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">
+              Panel de control
+            </p>
+            <h1 class="text-3xl font-black tracking-tight text-brand-900 sm:text-4xl">
+              Cinema Seat Manager
+            </h1>
+            <p class="mt-3 text-sm leading-6 text-slate-600">
+              Selecciona una fila y una columna para reservar o liberar asientos de la sala.
+            </p>
+          </div>
+
+          <div class="space-y-5">
+            <label class="block">
+              <span class="mb-2 block text-sm font-semibold text-slate-700">Fila</span>
+              <input
+                id="fila"
+                type="number"
+                min="0"
+                max="7"
+                placeholder="Ej. 3"
+                class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-900 outline-none transition focus:border-brand-500 focus:bg-white focus:ring-4 focus:ring-brand-100"
+              />
+            </label>
+
+            <label class="block">
+              <span class="mb-2 block text-sm font-semibold text-slate-700">Columna</span>
+              <input
+                id="columna"
+                type="number"
+                min="0"
+                max="9"
+                placeholder="Ej. 5"
+                class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-900 outline-none transition focus:border-brand-500 focus:bg-white focus:ring-4 focus:ring-brand-100"
+              />
+            </label>
+
+            <div class="grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+              <button
+                id="btnReservar"
+                type="button"
+                class="rounded-2xl bg-brand-700 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-brand-900/20 transition hover:bg-brand-900"
+              >
+                Reservar
+              </button>
+              <button
+                id="btnLiberar"
+                type="button"
+                class="rounded-2xl bg-red-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-red-900/20 transition hover:bg-red-700"
+              >
+                Liberar
+              </button>
+              <button
+                id="btnActualizar"
+                type="button"
+                class="rounded-2xl bg-accent-500 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-amber-900/20 transition hover:bg-accent-400"
+              >
+                Actualizar
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Estado</p>
+            <p id="mensaje" class="mt-2 text-sm font-medium text-slate-700">
+              Selecciona un asiento o ingresa una fila y columna.
+            </p>
+          </div>
+
+          <div class="mt-6 flex flex-wrap gap-3 text-xs font-semibold text-slate-600">
+            <span class="inline-flex items-center gap-2 rounded-full bg-white px-3 py-2 shadow-sm">
+              <span class="h-3 w-3 rounded-full bg-emerald-500"></span>
+              Libre
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-white px-3 py-2 shadow-sm">
+              <span class="h-3 w-3 rounded-full bg-red-500"></span>
+              Ocupado
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-white px-3 py-2 shadow-sm">
+              <span class="h-3 w-3 rounded-full border-2 border-amber-500"></span>
+              Seleccionado
+            </span>
+          </div>
+        </article>
+
+        <article class="overflow-hidden rounded-3xl border border-brand-900/10 bg-brand-900 px-4 py-6 text-white shadow-panel sm:px-8 sm:py-8">
+          <div class="mx-auto max-w-4xl">
+            <div class="mb-8 text-center">
+              <p class="text-xs font-semibold uppercase tracking-[0.24em] text-brand-100/80">Pantalla</p>
+              <div class="mx-auto mt-3 h-3 w-full max-w-2xl rounded-full bg-gradient-to-r from-amber-300 via-white to-amber-300 opacity-90"></div>
+            </div>
+
+            <div class="rounded-[2rem] bg-white/10 p-4 ring-1 ring-white/10 backdrop-blur sm:p-6">
+              <div id="sala" aria-label="Mapa de asientos del cine"></div>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
